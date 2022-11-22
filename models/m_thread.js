@@ -1,6 +1,6 @@
 const { default: mongoose } = require("mongoose");
 
-const PostSchema = mongoose.Schema({
+const ThreadSchema = mongoose.Schema({
     author:{
         type:mongoose.Schema.Types.ObjectId,
         ref:"User",
@@ -26,6 +26,6 @@ const PostSchema = mongoose.Schema({
     }
 });
 
-const Post = mongoose.model('Post', PostSchema);
+const Thread = mongoose.model('Thread', ThreadSchema);
 
-module.exports = Post;
+module.exports = Thread;
