@@ -27,6 +27,10 @@ const UserSchema = mongoose.Schema({
         required:true,
         unique:true
      },
+     image:{
+      type:String,
+      default:""
+     },
      createdAt:{
         type: Date,
         default: new Date(),
