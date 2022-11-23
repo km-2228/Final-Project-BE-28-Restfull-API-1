@@ -20,7 +20,6 @@ const postComment = async (req, res) => {
     try {
         const {comment} = req.body
         const id_thread = req.params.id_thread
-        console.log(req.user)
         if(!id_thread) res_error(res, 403, "403 Forbidden", "You're not an authenticated, authorized user")
 
         await Comment.create({comment, thread:id_thread, user:req.user.user._id}, (err, result) => {
