@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 const auths = require('./main/auth');
+const category = require('./main/category');
 const comment = require('./main/comment');
 const country = require('./main/country');
 const like = require('./main/like');
@@ -12,6 +13,7 @@ const user = require('./main/user');
 const welcome = require('./welcome/welcome');
 
 router.use('/auth-users', auths)
+router.use('/categories', category)
 router.use('/comments', comment);
 router.use('/countries', country);
 router.use('/likes', like);
