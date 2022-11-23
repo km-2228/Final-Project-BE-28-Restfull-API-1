@@ -1,4 +1,6 @@
 const Thread = require('../../models/m_thread');
+const Like = require('./../../models/m_like');
+const Comment = require('./../../models/m_comment');
 const {res_error, res_success} = require('../../response')
 
 const getAllThreads = async (req, res) => {
@@ -39,13 +41,14 @@ const updateThreadById = async (req, res) => {
 const deleteThread = async (req, res) => {
     try {
         let id_thread = req.params.id;
+        let {user} = req.body;
 
-        if(req.user.user.role != process.env.ADMIN || req.user.user.role == null) res_error(res, 403, "403 Forbidden", "Unauthenticated error and incorrect address so can't delete article by id (Admin)");
+        if(req.user.user._id != user) res_error(res, 403, "403 Forbidden", "Unauthenticated error and incorrect address so can't delete article by id (Admin)");
 
         await Like.deleteMany({"thread":id_thread});
-        await Comment.deleteMany({"user":id_thread});
+        await Comment.deleteMany({"thread":id_thread});
 
-        await Article.deleteOne({_id:_idArticle}, (err, result) => {
+        await Thread.deleteOne({"_id":id_thread}, (err, result) => {
             if(err) return res_error(res, 400, "400 Bad Request", "Request error by client so that it cannot delete article by ID")
 
             return res_success(res, 200, "200 OK", "You was deleted a article")
