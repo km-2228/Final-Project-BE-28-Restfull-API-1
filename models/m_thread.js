@@ -26,6 +26,8 @@ const ThreadSchema = mongoose.Schema({
     }
 });
 
+ThreadSchema.index({title:'text'})
+
 const Thread = mongoose.model('Thread', ThreadSchema);
 
 module.exports = Thread;
