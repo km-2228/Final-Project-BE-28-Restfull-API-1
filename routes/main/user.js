@@ -8,6 +8,6 @@ router.use(checkJWT);
 router.get('/', getProfile);
 router.put('/', editProfile);
 router.put('/update-image', updateImage);
-router.put('/get-thread-user', threadUser);
+router.get('/get-thread-user', threadUser);
 
 module.exports = router;
