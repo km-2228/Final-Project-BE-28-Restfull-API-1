@@ -3,7 +3,18 @@ const User = require('../../models/m_user');
 const {res_error, res_success} = require('../../response')
 
 const editProfile = async (req, res) => {
+     try {
+        const data = req.body;
+        const _idUser = req.user.user._id
+        await User.updateOne({"_id":_idUser}, 
+        {$set:data}, (err, result) => {
+            if(err) return res_error(res, 400, "400 Bad Request", "Request error by client so that it cannot change profile")
 
+            return res_success(res, 200, "200 OK", "Your profile was changed")
+        }).clone().catch(err => console.log(err))
+    } catch (error) {
+        if(error) return res_error(res, 500, "500 Internal Server Error",error.message)
+    }   
 }
 
 const getProfile = async (req, res) => {
@@ -21,6 +32,18 @@ const getProfile = async (req, res) => {
 }
 
 const updateImage = async (req, res) => {
+    try {
+        const {image} = req.body;
+        const _idUser = req.user.user._id
+        await User.updateOne({"_id":_idUser}, 
+        {$set:{image}}, (err, result) => {
+            if(err) return res_error(res, 400, "400 Bad Request", "Request error by client so that it cannot change image")
+
+            return res_success(res, 200, "200 OK", "Your image was changed")
+        }).clone().catch(err => console.log(err))
+    } catch (error) {
+        if(error) return res_error(res, 500, "500 Internal Server Error",error.message)
+    }   
 
 }
 
