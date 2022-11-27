@@ -9,13 +9,16 @@ const login = async (req, res) => {
     try {
         const {email, password} = req.body
         const user = await User.findOne({ email }).lean();
-
+        const data = {}
         if(!user) return res_error(res, 400, "400 Bad Request", "Your email or password is invalid")
 
         if(await bcrypt.compare(password, user.password)){
             const token = jwt.sign({user},process.env.JWTTOKEN)
-            
-            return res_success(res, 200, "200 OK", "You was login", token)
+            data._id = user._id
+            data.token = token
+            data.username = user.username
+            data.role = user.role
+            return res_success(res, 200, "200 OK", "You was login", data)
         }
 
         return res_error(res, 400, "400 Bad Request", "Your email or password is invalid")
@@ -26,9 +29,9 @@ const login = async (req, res) => {
 
 const register = async (req, res) => {
     try {
-        const {username, password:textPass, role, country, email} = req.body
+        const {username, password:textPass, country, email} = req.body
         const password = await bcrypt.hash(textPass, 10);
-        await User.create({username, password, role, country, email}, (err, result) => {
+        await User.create({username, password, country, email}, (err, result) => {
             if(err) return res_error(res, 400, "400 Bad Request", err.message)
 
             return res_success(res, 201, "201 Created", "Your Account was registered")
