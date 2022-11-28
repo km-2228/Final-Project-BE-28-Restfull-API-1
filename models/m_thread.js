@@ -20,6 +20,10 @@ const ThreadSchema = mongoose.Schema({
         ref:"Category",
         required:true
      },
+     isPublish:{
+      type:Boolean,
+      default:false
+     },
      createdAt:{
         type: Date,
         default: new Date(),
