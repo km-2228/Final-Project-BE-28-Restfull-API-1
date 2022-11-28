@@ -9,7 +9,7 @@ const getAllThreads = async (req, res) => {
             if(err) return res_error(res, 400, "400 Bad Request", "Request error by client so that it cannot get all threads")
             
             return res_success(res, 200, "200 OK", "Get all data threads", result)
-        }).clone().catch(err => console.log(err))
+        }).populate('author category', 'username image category').clone().catch(err => console.log(err))
     } catch (error) {
         if(error) return res_error(res, 500, "500 Internal Server Error",error.message)
     }
