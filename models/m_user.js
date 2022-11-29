@@ -31,7 +31,7 @@ const UserSchema = mongoose.Schema({
      },
      image:{
       type:String,
-      default:"https://www.clipartkey.com/mpngs/m/152-1520367_user-profile-default-image-png-clipart-png-download.png"
+      default:process.env.IMAGEPROFILE
      }
 }, { timestamps: true });
 
