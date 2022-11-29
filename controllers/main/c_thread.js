@@ -1,5 +1,4 @@
 const Thread = require('../../models/m_thread');
-const Like = require('./../../models/m_like');
 const Comment = require('./../../models/m_comment');
 const {res_error, res_success} = require('../../response')
 
@@ -47,7 +46,7 @@ const updateThreadById = async (req, res) => {
     try {
         let id_thread = req.params.id;
         let data = req.body;
-
+        
         if(req.user.user._id != data.author) res_error(res, 403, "403 Forbidden", "Unauthenticated error and incorrect address so can't delete thread by id");
 
         await Thread.updateOne({"_id":id_thread}, {$set:data}, (err, result) => {
@@ -67,7 +66,6 @@ const deleteThread = async (req, res) => {
 
         if(req.user.user._id != user) res_error(res, 403, "403 Forbidden", "Unauthenticated error and incorrect address so can't delete thread by id");
 
-        await Like.deleteMany({"thread":id_thread});
         await Comment.deleteMany({"thread":id_thread});
 
         await Thread.deleteOne({"_id":id_thread}, (err, result) => {
