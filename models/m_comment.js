@@ -16,8 +16,8 @@ const CommentSchema = mongoose.Schema({
         required:true
     },
     createdAt:{
-        type: Date,
-        default: new Date(),
+        type:Date,
+        default: new Date().toLocaleString('en-US', { timeZone: 'Asia/Jakarta' })
     }
 });
 
