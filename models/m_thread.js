@@ -23,12 +23,8 @@ const ThreadSchema = mongoose.Schema({
      isPublish:{
       type:Boolean,
       default:false
-     },
-     createdAt:{
-        type: Date,
-        default: new Date(),
-    }
-});
+     }
+}, { timestamps: true });
 
 ThreadSchema.index({title:'text'})
 
