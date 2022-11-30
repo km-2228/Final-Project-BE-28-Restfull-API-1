@@ -1,5 +1,6 @@
 const Thread = require('../../models/m_thread');
 const User = require('../../models/m_user');
+const bcrypt = require('bcryptjs');
 const {res_error, res_success} = require('../../response')
 
 const editProfile = async (req, res) => {
@@ -22,7 +23,8 @@ const getProfile = async (req, res) => {
         const _idUser = req.user.user._id
         await User.findOne({"_id":_idUser}, (err, result) => {
             if(err) return res_error(res, 400, "400 Bad Request", "Request error by client so that it cannot get profile")
-
+            const en_password = bcrypt.hash(result.password, 10);
+            result.password = en_password
             return res_success(res, 200, "200 OK", "Your data was checked", result)
         }).populate('role country', "role country").clone().catch(err => console.log(err))
         
