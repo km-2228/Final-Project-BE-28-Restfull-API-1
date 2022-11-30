@@ -1,16 +1,11 @@
 const Thread = require('../../models/m_thread');
 const User = require('../../models/m_user');
-const Cryptr = require('cryptr')
-const env = require('dotenv');
 const {res_error, res_success} = require('../../response')
-env.config();
-const cryptr = new Cryptr(process.env.ENKRIP)
 
 const editProfile = async (req, res) => {
      try {
         const data = req.body;
         const _idUser = req.user.user._id
-        data.password = cryptr.encrypt(data.password)
         await User.updateOne({"_id":_idUser}, 
         {$set:data}, (err, result) => {
             if(err) return res_error(res, 400, "400 Bad Request", "Request error by client so that it cannot change profile")
@@ -27,7 +22,7 @@ const getProfile = async (req, res) => {
         const _idUser = req.user.user._id
         await User.findOne({"_id":_idUser}, (err, result) => {
             if(err) return res_error(res, 400, "400 Bad Request", "Request error by client so that it cannot get profile")
-            result.password = cryptr.decrypt(result.password)
+         
             return res_success(res, 200, "200 OK", "Your data was checked", result)
         }).populate('role country', "role country").clone().catch(err => console.log(err))
         
