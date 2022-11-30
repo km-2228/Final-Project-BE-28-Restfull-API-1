@@ -29,9 +29,9 @@ const login = async (req, res) => {
 
 const register = async (req, res) => {
     try {
-        const {username, password:textPass, country, email} = req.body
+        const {username, password:textPass, country, email, image} = req.body
         const password = await bcrypt.hash(textPass, 10);
-        await User.create({username, password, country, email}, (err, result) => {
+        await User.create({username, password, country, email, image}, (err, result) => {
             if(err) return res_error(res, 400, "400 Bad Request", err.message)
 
             return res_success(res, 201, "201 Created", "Your Account was registered")
