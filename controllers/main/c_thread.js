@@ -48,7 +48,7 @@ const updateThreadById = async (req, res) => {
         let id_thread = req.params.id;
         let data = req.body;
         
-        if(req.user.user._id != data.user) res_error(res, 403, "403 Forbidden", "Unauthenticated error and incorrect address so can't delete thread by id");
+        if(req.user.user._id != data.user) return res_error(res, 403, "403 Forbidden", "Unauthenticated error and incorrect address so can't delete thread by id");
 
         await Thread.updateOne({"_id":id_thread}, {$set:data}, (err, result) => {
             if(err) return res_error(res, 400, "400 Bad Request", "Request error by client so that it cannot change thread by ID")
@@ -65,7 +65,7 @@ const deleteThread = async (req, res) => {
         let id_thread = req.params.id;
         let {user} = req.body;
 
-        if(req.user.user._id != user) res_error(res, 403, "403 Forbidden", "Unauthenticated error and incorrect address so can't delete thread by id");
+        if(req.user.user._id != user) return res_error(res, 403, "403 Forbidden", "Unauthenticated error and incorrect address so can't delete thread by id");
 
         await Comment.deleteMany({"thread":id_thread});
 
