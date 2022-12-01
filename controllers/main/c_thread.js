@@ -49,6 +49,7 @@ const updateThreadById = async (req, res) => {
     try {
         let id_thread = req.params.id;
         let data = req.body;
+        let {user} = req.body;
         
         if(req.user.user.role != process.env.ADMIN && req.user.user._id != user) return res_error(res, 403, "403 Forbidden", "Unauthenticated error and incorrect address so can't delete thread by id");
 
