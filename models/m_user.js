@@ -1,4 +1,6 @@
+const env = require('dotenv');
 const { default: mongoose } = require("mongoose");
+env.config();
 
 const UserSchema = mongoose.Schema({
      username:{
@@ -15,7 +17,7 @@ const UserSchema = mongoose.Schema({
      role:{
         type:mongoose.Schema.Types.ObjectId,
         ref:"Role",
-        required:true
+        default:process.env.USER
      },
      country:{
         type:mongoose.Schema.Types.ObjectId,
@@ -27,11 +29,12 @@ const UserSchema = mongoose.Schema({
         required:true,
         unique:true
      },
-     createdAt:{
-        type: Date,
-        default: new Date(),
-    }
-});
+     image:{
+      type:String,
+      default:""
+     },
+     
+}, { timestamps: true });
 
 const User = mongoose.model('User', UserSchema);
 

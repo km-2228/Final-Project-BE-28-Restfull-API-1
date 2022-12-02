@@ -1,11 +1,11 @@
-const Role = require('../../models/m_role');
+const Category = require('../../models/m_category');
 const {res_error, res_success} = require('../../response')
 const env = require('dotenv');
 env.config();
 
-const getAllRoles = async (req, res) => {
+const getAllCategories = async (req, res) => {
     try {
-        await Role.find({}, (err, result) => {
+        await Category.find({}, (err, result) => {
             if(err) return res_error(res, 400, "400 Bad Request", "Request error by client so that it cannot get all roles")
             
             return res_success(res, 200, "200 OK", "Get all data Roles ", result)
@@ -15,12 +15,12 @@ const getAllRoles = async (req, res) => {
     }
 }
 
-const storeRole = async (req, res) => {
+const storeCategory = async (req, res) => {
     try {
-        const {role} = req.body;
+        const {category} = req.body;
 
-        await Role.create({
-            role
+        await Category.create({
+            category
         }, (err, result) => {
             if(err) return res_error(res, 400, "400 Bad Request", "Request error by client so that it cannot store role")
 
@@ -31,4 +31,16 @@ const storeRole = async (req, res) => {
     }
 }
 
-module.exports = {getAllRoles, storeRole}
+const deleteAllCategories = async (req, res) => {
+    try {
+        await Category.deleteMany({}, (err, result) => {
+            if(err) return res_error(res, 400, "400 Bad Request", "Request error by client so that it cannot delete all categories")
+
+            return res_success(res, 200, "200 OK", "You was deleted all categories")
+        }).clone().catch(err => console.log(err))
+    } catch (error) {
+        if(error) return res_error(res, 500, "500 Internal Server Error",error.message)
+    }
+}
+
+module.exports = {getAllCategories, storeCategory, deleteAllCategories}
