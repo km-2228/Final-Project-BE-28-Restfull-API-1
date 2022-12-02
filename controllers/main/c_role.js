@@ -19,8 +19,6 @@ const storeRole = async (req, res) => {
     try {
         const {role} = req.body;
 
-        // if(req.user.user.role != process.env.ADMIN || req.user.user.role == null) res_error(res, 403, "403 Forbidden", "Unauthenticated error and incorrect address so can't store the role (Admin)");
-
         await Role.create({
             role
         }, (err, result) => {

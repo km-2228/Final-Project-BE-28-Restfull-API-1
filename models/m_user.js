@@ -31,8 +31,9 @@ const UserSchema = mongoose.Schema({
      },
      image:{
       type:String,
-      default:process.env.IMAGEPROFILE
-     }
+      default:""
+     },
+     
 }, { timestamps: true });
 
 const User = mongoose.model('User', UserSchema);
