@@ -12,6 +12,7 @@
   | country       | Id of country | Contains the user's country        |
   | email         | String        | Contains the user's email          |
   | createdAt     | Date          | contains the account creation date |
+  | updatedAt     | Date          | contains the account update date   |
 
 
 - ## Role Model
@@ -20,6 +21,7 @@
   | ------------- | ---------     | ----------------------------       |
   | role          | String        | Contains the role's name           |
   | createdAt     | Date          | contains the role creation date    |
+  | updatedAt     | Date          | contains the role update date   |
 
 
 - ## Country Model
@@ -28,6 +30,7 @@
   | ------------- | ---------     | ----------------------------       |
   | Country       | String        | Contains the country's name        |
   | createdAt     | Date          | contains the country creation date |
+  | updatedAt     | Date          | contains the country update date   |
   
   
   - ## Thread Model
@@ -39,6 +42,7 @@
   | content       | String         | Contains the thread's content     |
   | category      | Id of category | Contains the thread's category    |
   | createdAt     | Date           | Contains the thread creation date |
+  | updatedAt     | Date           | contains the account thread date  |
   
   
 - ## Category Model
@@ -47,15 +51,7 @@
   | ------------- | ---------     | ----------------------------        |
   | category      | String        | Contains the category's name        |
   | createdAt     | Date          | contains the category creation date |
-  
-  
-- ## Like Model
-
-  | Atrributes    | Data Type     | Description                                  |
-  | ------------- | ---------     | ----------------------------                 |
-  | user          | Id of user    | Contains the user who like in the article    |
-  | thread        | Id of thread | Contains the thread liked by user           |
-  | createdAt     | Date          | contains the like creation date              |
+  | updatedAt     | Date          | contains the category update date   |
   
 
 - ## Comment Model
@@ -66,6 +62,7 @@
   | user          | Id of user    | Contains the user who comment in the article |
   | thread        | Id of thread | Contains the thread commented by user         |
   | createdAt     | Date          | contains the comment creation date           |
+  | updatedAt     | Date          | contains the comment update date             |
   
    
 # Welcome Endpoint
@@ -168,6 +165,32 @@
               "message" : "Your data was checked"
           }
       ```
+      
+  - ### Edit & update user password (all users)
+
+     - Method : PUT
+     - Endpoint : /users/change-password
+     - Header :
+      - Content-Type : application/json
+      - Accept : application/json
+      - authorization : JSON Web Token
+
+     - Body :
+
+      ```javascript
+          {
+              "password":"string - required",
+          }
+      ```
+
+     - Response :
+
+      ```javascript
+         {
+              "status" : "200 OK",
+              "message" : "Your profile was changed"
+          }
+      ```
 
   - ### Edit & update user profile (all users)
 
@@ -182,10 +205,7 @@
 
       ```javascript
           {
-              "username":"String - mininum length 8 - required",
-              "password":"String - mininum length 8 - required",
               "country":"id of country - required",
-              "email":"String - required",
           }
       ```
 
@@ -332,7 +352,7 @@
           }
       ```
 
-  - ### Edit & update thread by author (admin & all users)
+  - ### Edit & update thread by author or Admin (admin & all users)
 
      - Method : PUT
      - Endpoint : /threads/:id
@@ -349,10 +369,10 @@
 
       ```javascript
           {
-              "author":"Id of user",
               "title":"String",
               "category":"Id of category",
-              "content":"String"
+              "content":"String",
+              "user":"id_user / role admin"
           }
       ```
 
@@ -365,7 +385,7 @@
           }
       ```
 
-  - ### Delete thread by author (admin & all users)
+  - ### Delete thread by author or admin (admin & all users)
 
      - Method : DELETE
      - Endpoint : /threads/:id
@@ -377,6 +397,14 @@
      - Paremeter :
 
       `/threads/id_of_thread"
+      
+     - Body :
+     
+      ```javascript
+          {
+            "user":"id_user / role admin"
+          }
+      ```
 
      - Response :
 
@@ -436,49 +464,6 @@
           }
       ```
 
-# Like Endpoint
-
-  - ### Get all data liked from user on each articles (admin & all users)
-
-       - Method : GET
-       - Endpoint : /likes/:id
-       - Header :
-        - Accept : application/json
-
-      - Paremeter :
-
-      `/likes/id_of_thread"
-
-       - Response :
-
-        ```javascript
-           {
-                "status" : "200 OK",
-                
-                "message" : "Get all data Countries"
-            }
-        ```
-
-  - ### Like and unlike threads (admin)
-
-       - Method : POST
-       - Endpoint : /likes/:id
-       - Header :
-        - Accept : application/json
-
-      - Paremeter :
-
-      `/likes/id_of_thread"
-      
-       - Response :
-
-        ```javascript
-           {
-                "status" : "200 OK",
-                
-                "message" : "Get all data Countries"
-            }
-        ```
 
 # Country Endpoint
   
@@ -526,6 +511,24 @@
          {
               "status" : "200 OK",
               "message" : "You was listed a country"
+          }
+      ```
+
+   - ### Delete country (admin)
+
+     - Method : delete
+     - Endpoint : /countries
+     - Header :
+      - Content-Type : application/json
+      - Accept : application/json
+      - authorization : JSON Web Token
+
+     - Response :
+
+      ```javascript
+         {
+              "status" : "200 OK",
+              "message" : "You was deleted all countries"
           }
       ```
 
@@ -601,10 +604,10 @@
             }
         ```
         
-  - ### Post country (admin)
+  - ### Post category (admin)
 
      - Method : POST
-     - Endpoint : /countries
+     - Endpoint : /categories
      - Header :
       - Content-Type : application/json
       - Accept : application/json
@@ -614,7 +617,7 @@
 
       ```javascript
           {
-              "country" : "String - rquired"
+              "category" : "String - rquired"
           }
       ```
 
@@ -623,6 +626,24 @@
       ```javascript
          {
               "status" : "200 OK",
-              "message" : "You was listed a country"
+              "message" : "You was listed a category"
+          }
+      ```
+      
+   - ### Delete category (admin)
+
+     - Method : delete
+     - Endpoint : /categories
+     - Header :
+      - Content-Type : application/json
+      - Accept : application/json
+      - authorization : JSON Web Token
+
+     - Response :
+
+      ```javascript
+         {
+              "status" : "200 OK",
+              "message" : "You was deleted all categories"
           }
       ```
