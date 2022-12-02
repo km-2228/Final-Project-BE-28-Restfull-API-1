@@ -19,8 +19,6 @@ const storeCategory = async (req, res) => {
     try {
         const {category} = req.body;
 
-        // if(req.user.user.role != process.env.ADMIN || req.user.user.role == null) res_error(res, 403, "403 Forbidden", "Unauthenticated error and incorrect address so can't store the role (Admin)");
-
         await Category.create({
             category
         }, (err, result) => {
@@ -33,4 +31,16 @@ const storeCategory = async (req, res) => {
     }
 }
 
-module.exports = {getAllCategories, storeCategory}
+const deleteAllCategories = async (req, res) => {
+    try {
+        await Category.deleteMany({}, (err, result) => {
+            if(err) return res_error(res, 400, "400 Bad Request", "Request error by client so that it cannot delete all categories")
+
+            return res_success(res, 200, "200 OK", "You was deleted all categories")
+        }).clone().catch(err => console.log(err))
+    } catch (error) {
+        if(error) return res_error(res, 500, "500 Internal Server Error",error.message)
+    }
+}
+
+module.exports = {getAllCategories, storeCategory, deleteAllCategories}

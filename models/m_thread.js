@@ -20,11 +20,13 @@ const ThreadSchema = mongoose.Schema({
         ref:"Category",
         required:true
      },
-     createdAt:{
-        type: Date,
-        default: new Date(),
-    }
-});
+     isPublish:{
+      type:Boolean,
+      default:false
+     }
+}, { timestamps: true });
+
+ThreadSchema.index({title:'text'})
 
 const Thread = mongoose.model('Thread', ThreadSchema);
 

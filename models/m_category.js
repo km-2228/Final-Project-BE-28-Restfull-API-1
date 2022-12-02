@@ -4,12 +4,8 @@ const CategorySchema = mongoose.Schema({
     category:{
         type:String,
         required:true
-    },
-    createdAt:{
-        type: Date,
-        default: new Date(),
     }
-});
+}, { timestamps: true });
 
 const Category = mongoose.model('Category', CategorySchema);
 

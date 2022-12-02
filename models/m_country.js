@@ -4,12 +4,8 @@ const CountrySchema = mongoose.Schema({
     country:{
         type:String,
         required:true
-    },
-    createdAt:{
-        type: Date,
-        default: new Date(),
     }
-});
+}, { timestamps: true });
 
 const Country = mongoose.model('Country', CountrySchema);
 

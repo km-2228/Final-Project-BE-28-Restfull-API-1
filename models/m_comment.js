@@ -14,12 +14,8 @@ const CommentSchema = mongoose.Schema({
         type:mongoose.Schema.Types.ObjectId,
         ref:"User",
         required:true
-    },
-    createdAt:{
-        type: Date,
-        default: new Date(),
     }
-});
+}, { timestamps: true });
 
 const Comment = mongoose.model('Comment', CommentSchema);
 
