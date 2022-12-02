@@ -1,5 +1,8 @@
 # Final-Project-BE-28-Restfull-API
 
+## Link Draw IO ERD:
+https://drive.google.com/file/d/1k0CtlBst6pa-9htW1Nm6SbX6TjQjMCz4/view?usp=share_link
+
 # API Specification
 
 - ## User Model
